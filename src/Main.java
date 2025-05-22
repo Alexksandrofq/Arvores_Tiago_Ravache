@@ -3,6 +3,11 @@
 public class Main {
     public static void main(String[] args) {
         Arvore arvore = new Arvore("A");
-        arvore.inserir("B");
+        arvore.raiz.filhoEsquerdo =  new No("B");
+        arvore.raiz.filhoDireito =  new No("C");
+
+        No no = new No("D");
+
+
     }
 }
