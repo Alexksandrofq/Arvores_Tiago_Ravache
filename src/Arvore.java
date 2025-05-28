@@ -1,3 +1,7 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
 public class Arvore {
     public No raiz;
 
@@ -9,8 +13,13 @@ public class Arvore {
         No novoNo = new No(conteudo);
         if(vazia()) {
             raiz = novoNo;
+        } else {
+            inserirRecursivo(raiz, novoNo);
+
         }
     }
+
+
 
     public boolean vazia() {
         if(raiz == null) {
@@ -22,14 +31,8 @@ public class Arvore {
 
 
     public int contarNo(No no) {
-        int contador = 0;
-        if(vazia()) {
-            System.out.println("Está vazia");
-        }
-        while(raiz != null) {
-            contador++;
-        }
-        return contador;
+        if (no == null) return 0;
+        return 1 + contarNo(no.filhoEsquerdo) + contarNo(no.filhoDireito);
     }
 
     public void percorrerPreOrdem(No no) {
@@ -57,50 +60,106 @@ public class Arvore {
         }
     }
 
-    public void percorrerNivel(No no) {
-        if(no != null) {
+//    public void percorrerNivel(No no) {
+//        if(no != null) {
+//            System.out.println(no.conteudo);
+//            percorrerNivel(no.filhoEsquerdo);
+//        } else {
+//            System.out.println("não há nó");
+//        }
+//    }
+
+    public void percorrerNivel() {
+        if(raiz == null) return;
+
+        Queue<No> fila = new LinkedList<No>();
+        fila.add(raiz);
+
+        while(!fila.isEmpty()) {
+            No no = fila.poll();
             System.out.println(no.conteudo);
-            percorrerNivel(no.filhoEsquerdo);
-        } else {
-            System.out.println("não há nó");
+
+            if(no.filhoEsquerdo != null) {
+                fila.add(no.filhoEsquerdo);
+            }
+            if(no.filhoDireito != null) {
+                fila.add(no.filhoDireito);
+            }
         }
     }
 
 
-    public void percorrerPreOredemSemRecursividade(No no) {
-        while(no != null) {
-            percorrerPreOredemSemRecursividade(no.filhoEsquerdo);
-            if(no.filhoEsquerdo != null) {
-                System.out.println(no.conteudo);
+    public void percorrerPreOrdemSemRecursividade() {
+        if(raiz == null) return;
+        Stack<No> pilha = new Stack<No>();
+        pilha.push(raiz);
 
-            }
-            no = no.filhoDireito;
+        while (!pilha.isEmpty()){
+            No atual = pilha.pop();
+            System.out.println(atual.conteudo);
+
+            if(atual.filhoDireito != null) pilha.push(atual.filhoDireito);
+            if(atual.filhoEsquerdo!= null) pilha.push(atual.filhoEsquerdo);
         }
     }
 
     public void percorrerEmOrdemSemRecursividade(No no) {
-        while(no != null) {
-            percorrerPreOredemSemRecursividade(no.filhoEsquerdo);
-            if(no.filhoEsquerdo == null) {
-                System.out.println(no.conteudo);
+        Stack<No> pilha = new Stack<>();
+        No atual = raiz;
+
+        while (atual != null || !pilha.isEmpty()){
+            while (atual != null) {
+                pilha.push(atual);
+                atual = atual.filhoEsquerdo;
             }
-            no = no.filhoDireito;
+            atual = pilha.pop();
+            System.out.println(atual.conteudo);
+            atual = atual.filhoDireito;
         }
     }
 
     public void percorrerPosOrdemSemRecursividade(No no) {
-        while(no != null) {
-            percorrerPosOrdemSemRecursividade(no.filhoEsquerdo);
-            if(no.filhoEsquerdo == null) {
-                percorrerPosOrdemSemRecursividade(no.filhoDireito);
-                if(no.filhoDireito == null) {
-                    System.out.println(no.conteudo);
-                }
-            }
-            no = no.filhoDireito;
+        if (raiz == null) return;
+
+        Stack<No> pilha1 = new Stack<>();
+        Stack<No> pilha2 = new Stack<>();
+        pilha1.push(raiz);
+
+        while (!pilha1.isEmpty()){
+            No atual = pilha1.pop();
+            pilha2.push(atual);
+
+            if (atual.filhoEsquerdo != null) pilha1.push(atual.filhoEsquerdo);
+            if (atual.filhoDireito != null) pilha2.push(atual.filhoDireito);
+        }
+
+        while (!pilha2.isEmpty()){
+            System.out.println(pilha2.pop().conteudo);
         }
     }
 
 
+    public int contarFolhasComRecursividade(No no) {
+        if (no == null) return 0;
+        if (no.filhoEsquerdo == null && no.filhoDireito == null) return 1;
+        return contarFolhasComRecursividade(no.filhoEsquerdo) + contarFolhasComRecursividade(no.filhoDireito);
+    }
 
+    public int contarFolhaSemRecursividade() {
+        if (raiz == null) return 0;
+
+        int contador = 0;
+        Stack<No> pilha = new Stack<>();
+        pilha.push(raiz);
+
+        while (!pilha.isEmpty()){
+            No atual = pilha.pop();
+            if (atual.filhoEsquerdo == null && atual.filhoDireito == null) {
+                contador++;
+            }
+            if (atual.filhoEsquerdo != null) pilha.push(atual.filhoDireito);
+            if(atual.filhoDireito != null) pilha.push(atual.filhoEsquerdo);
+        }
+        return contador;
+    }
 }
