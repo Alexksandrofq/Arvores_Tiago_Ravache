@@ -2,11 +2,13 @@ public class No {
     public String conteudo;
     public No filhoEsquerdo;
     public No filhoDireito;
+    public int balanceamento;
 
     public No(String conteudo) {
         this.conteudo = conteudo;
         this.filhoEsquerdo = null;
         this.filhoDireito = null;
+        this.balanceamento = 0;
     }
 
     public String getConteudo() {
@@ -32,6 +34,14 @@ public class No {
     public void setFilhoDireito(No filhoDireito) {
         this.filhoDireito = filhoDireito;
     }
+
+    public int getBalanceamento() {
+        return balanceamento;
+    }
+    public void setBalanceamento(int balanceamento) {
+        this.balanceamento = balanceamento;
+    }
+
 
 
 }

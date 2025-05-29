@@ -14,7 +14,6 @@ public class Arvore {
         if(vazia()) {
             raiz = novoNo;
         } else {
-            inserirRecursivo(raiz, novoNo);
 
         }
     }
