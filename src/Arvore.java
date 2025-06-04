@@ -9,16 +9,6 @@ public class Arvore {
         this.raiz = new No(conteudo);
     }
 
-    public void inserir(String conteudo) {
-        No novoNo = new No(conteudo);
-        if(vazia()) {
-            raiz = novoNo;
-        } else {
-
-        }
-    }
-
-
 
     public boolean vazia() {
         if(raiz == null) {
@@ -161,4 +151,27 @@ public class Arvore {
         }
         return contador;
     }
+
+    public void inserir(No no) {
+        if (no == null) return;
+        if (no.filhoEsquerdo == null) no.filhoEsquerdo = no;
+        if (no.filhoDireito == null) no.filhoDireito = no;
+    }
+
+    public void remover(No conteudo) {
+        if (no == null) return;
+        No aux = getConteudo
+    }
+
+    public void bucar(No no) {
+        if (raiz == null) return;
+        if (no.filhoEsquerdo == no)
+            System.out.println(no);
+        if (no.filhoDireito == no)
+            System.out.println(no);
+        if (raiz == no)
+            System.out.println(raiz);
+    }
+
+
 }
